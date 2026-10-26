@@ -157,8 +157,24 @@
       font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.09em;
       border-radius:5px;padding:4px 9px;white-space:nowrap;
     }
-    .chip--uso{background:rgba(231,158,20,.14);border:1px solid var(--linha-ambar);color:var(--ambar)}
     .chip--av{background:rgba(255,255,255,.06);border:1px solid var(--linha);color:var(--fraco)}
+
+    /* ---------- regra zero ---------- */
+    .zero{
+      background:rgba(231,158,20,.06);
+      border:1px solid var(--linha-ambar);
+      border-left:3px solid var(--ambar);
+      border-radius:0 18px 18px 0;
+      padding:22px 24px;
+      margin:0 0 clamp(10px,2.4vw,20px);
+    }
+    .zero .q{
+      font-size:10.5px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;
+      color:var(--ambar);margin:0 0 9px;
+    }
+    .zero h2{font-size:clamp(1.05rem,3.2vw,1.32rem);margin:0 0 10px}
+    .zero p{margin:0;color:var(--texto);font-size:15px;max-width:66ch}
+    .zero p + p{margin-top:10px}
     @media (max-width:620px){
       .lin{grid-template-columns:1fr auto;gap:6px 12px}
       .cam{grid-column:1/-1}
@@ -193,16 +209,32 @@
   <div class="pg">
 
     <header class="hero">
-      <p class="tag">Para revisão técnica</p>
+      <p class="tag">Projeto novo &middot; para revisão técnica</p>
       <h1>Sistema de gestão <span class="am">Siconect</span></h1>
       <p class="lead">
-        Um ERP completo, construído primeiro para rodar a operação da própria casa e
-        desenhado desde o início para virar produto de mercado. Esta página registra
-        o que o sistema faz, o que isso exige da infraestrutura e o que ainda não
+        Um ERP completo, que vai primeiro rodar a operação da própria casa e está
+        desenhado desde o início para virar produto de mercado. <strong>Nada existe
+        ainda: nem código, nem conta, nem servidor.</strong> Esta página registra o
+        que o sistema vai fazer, o que isso exige da infraestrutura e o que ainda não
         está decidido — e existe para ser revisada por quem vai apontar o que está
         errado nela. As perguntas estão na seção 6.
       </p>
     </header>
+
+    <div class="zero">
+      <p class="q">Regra zero</p>
+      <h2>Nada é compartilhado</h2>
+      <p>
+        Nenhuma conta, repositório, servidor ou banco deste projeto reaproveita
+        estrutura que já exista. Tudo nasce novo e no nome de quem vai ser dono do
+        sistema, porque quem não é dono não migra: recomeça.
+      </p>
+      <p>
+        Isso vale também para o ambiente de desenvolvimento — <strong>o código não
+        roda em máquina da consultoria</strong>, e base de produção não toca disco
+        local.
+      </p>
+    </div>
 
     <section>
       <div class="cab">
@@ -217,11 +249,11 @@
       </p>
       <div class="fases">
         <div class="fase fase--agora">
-          <p class="q">Fase 1 &middot; agora</p>
+          <p class="q">Fase 1 &middot; primeira entrega</p>
           <h3>Sistema interno</h3>
           <p>
-            Roda a operação da Siconect: comercial, ordem de serviço, financeiro e
-            mídia num só lugar, substituindo planilha e controle solto.
+            Vai rodar a operação da Siconect: comercial, ordem de serviço, financeiro
+            e mídia num só lugar, substituindo planilha e controle solto.
           </p>
         </div>
         <div class="fase">
@@ -407,6 +439,21 @@
           </div>
         </div>
 
+        <div class="ex">
+          <span class="ico">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="#E79E14" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M9 21h6"/><path d="M12 17v4"/><path d="M7 9.5 9 11l-2 1.5"/><path d="M11.5 12.5h4"/></svg>
+          </span>
+          <div class="tx">
+            <h3>O desenvolvimento não acontece em máquina nossa</h3>
+            <p>
+              Consequência direta da regra zero. Sem código do projeto em disco da
+              consultoria e sem credencial de produção em arquivo local, o
+              desenvolvimento precisa de ambiente próprio — e isso é decisão de
+              ferramenta a tomar antes da primeira linha, não depois.
+            </p>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -426,11 +473,12 @@
           <div class="sv">
             <h3>GitHub</h3>
             <p>
-              Um repositório por projeto, nunca monorepo. É o que permite entregar o
-              sistema de um cliente sem expor o histórico dos outros.
+              Organização nova, exclusiva do projeto, com um repositório por
+              aplicação e nunca monorepo. É o que permite transferir o sistema por
+              troca de titularidade do repositório, preservando o histórico.
             </p>
           </div>
-          <span class="chip chip--uso">Em uso</span>
+          <span class="chip chip--av">Em avaliação</span>
         </div>
 
         <div class="lin">
@@ -438,11 +486,12 @@
           <div class="sv">
             <h3>Vercel</h3>
             <p>
-              Hoje serve os painéis, já na região de São Paulo. A dúvida aberta é se
-              função sem servidor sustenta um ERP com fechamento financeiro e fila.
+              Hospedagem da aplicação em conta própria, com região de São Paulo
+              disponível. A dúvida aberta é se função sem servidor sustenta um ERP
+              com fechamento financeiro, fila e tarefa longa.
             </p>
           </div>
-          <span class="chip chip--uso">Em uso</span>
+          <span class="chip chip--av">Em avaliação</span>
         </div>
 
         <div class="lin">
@@ -498,12 +547,13 @@
       <div class="ab">
 
         <div class="item item--trava">
-          <span class="trava">Trava as demais</span>
+          <span class="trava">Primeiro passo</span>
           <h3>Titularidade das contas</h3>
           <p>
-            Servidor, banco e serviços nascem no nome de quem vai ser dono do
-            sistema. Decidido depois, significa reabrir tudo — conta de nuvem não
-            muda de titular sem recomeçar.
+            Como nada existe ainda, esta é a primeira coisa a fazer e não a última.
+            Repositório, servidor, banco e serviços nascem no nome de quem vai ser
+            dono do sistema, e conta de nuvem não muda de titular depois sem
+            recomeçar. Abrir no nome errado agora custa refazer tudo mais tarde.
           </p>
         </div>
 
@@ -543,7 +593,7 @@
         <h2>O que a gente quer que você olhe</h2>
       </div>
       <p class="intro">
-        Cinco perguntas, em ordem de impacto. A primeira é a que mais muda o resto —
+        Seis perguntas, em ordem de impacto. A primeira é a que mais muda o resto —
         e é a que a gente tem menos certeza de estar enxergando direito.
       </p>
       <div class="ab">
@@ -569,7 +619,18 @@
         </div>
 
         <div class="item">
-          <h3>3. Qual banco entrega recuperação a ponto no tempo sem adicional caro?</h3>
+          <h3>3. Onde roda o desenvolvimento, se não é na nossa máquina?</h3>
+          <p>
+            A regra zero diz que o código do projeto não fica em disco da
+            consultoria e que credencial de produção não vive em arquivo local.
+            Ambiente remoto de desenvolvimento, contêiner gerenciado, ou máquina
+            dedicada do projeto? O que você usaria com time pequeno, sem transformar
+            isso em obra?
+          </p>
+        </div>
+
+        <div class="item">
+          <h3>4. Qual banco entrega recuperação a ponto no tempo sem adicional caro?</h3>
           <p>
             É requisito do módulo financeiro, não conforto. Em vários provedores ela
             é adicional de preço alto, e isso muda a comparação inteira. Qual
@@ -578,7 +639,7 @@
         </div>
 
         <div class="item">
-          <h3>4. O dado pode sair do Brasil?</h3>
+          <h3>5. O dado pode sair do Brasil?</h3>
           <p>
             Guardar fora é legal com a salvaguarda contratual certa, mas continua
             sendo transferência internacional, e o sistema vai guardar documento e
@@ -588,7 +649,7 @@
         </div>
 
         <div class="item">
-          <h3>5. O que desta pilha é excesso?</h3>
+          <h3>6. O que desta pilha é excesso?</h3>
           <p>
             Dos cinco serviços da seção 4, três podem hospedar aplicação e dois podem
             servir banco. Onde a gente está prestes a pagar duas vezes pela mesma
