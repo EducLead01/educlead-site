@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Infraestrutura Siconect</title>
+  <meta name="description" content="O sistema de gestão da Siconect: módulos, as duas fases e o que elas exigem da infraestrutura." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --preto:#0A0A0A;
+      --carvao:#111111;
+      --ambar:#E79E14;
+      --branco:#ffffff;
+      --texto:rgba(255,255,255,.72);
+      --fraco:rgba(255,255,255,.42);
+      --linha:rgba(255,255,255,.08);
+      --linha-ambar:rgba(231,158,20,.28);
+      color-scheme:dark;
+    }
+    *{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{
+      margin:0;
+      background:var(--preto);
+      color:var(--branco);
+      font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+      font-size:16px;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    .pg{max-width:880px;margin:0 auto;padding-inline:20px;padding-block:0}
+
+    /* ---------- topo ---------- */
+    header.hero{padding-block:clamp(56px,13vw,104px) clamp(36px,8vw,64px)}
+    .tag{
+      display:inline-flex;align-items:center;gap:9px;
+      font-size:11.5px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;
+      color:var(--ambar);margin:0 0 20px;
+    }
+    .tag::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ambar)}
+    h1{
+      font-weight:900;text-transform:uppercase;letter-spacing:-.025em;
+      font-size:clamp(2rem,7.5vw,3.5rem);line-height:1.02;
+      margin:0 0 20px;text-wrap:balance;
+    }
+    h1 .am{color:var(--ambar)}
+    .lead{
+      font-size:clamp(16.5px,2.4vw,19px);color:var(--texto);
+      margin:0;max-width:62ch;
+    }
+
+    /* ---------- seções ---------- */
+    section{padding-block:clamp(34px,7vw,52px);border-top:1px solid var(--linha)}
+    .cab{display:flex;align-items:center;gap:13px;margin:0 0 22px}
+    .num{
+      width:34px;height:34px;flex:0 0 auto;border-radius:50%;
+      background:rgba(231,158,20,.12);border:1px solid var(--linha-ambar);
+      display:flex;align-items:center;justify-content:center;
+      font-size:12.5px;font-weight:900;color:var(--ambar);
+      font-variant-numeric:tabular-nums;
+    }
+    h2{
+      font-weight:900;text-transform:uppercase;letter-spacing:-.015em;
+      font-size:clamp(1.12rem,3.4vw,1.5rem);line-height:1.15;
+      margin:0;text-wrap:balance;
+    }
+    .intro{color:var(--texto);margin:0 0 24px;max-width:66ch}
+    .intro:last-child{margin-bottom:0}
+
+    /* ---------- fases ---------- */
+    .fases{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px}
+    .fase{
+      background:var(--carvao);border:1px solid var(--linha);
+      border-radius:18px;padding:22px;min-width:0;
+    }
+    .fase--agora{border-color:var(--linha-ambar)}
+    .fase .q{
+      font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;
+      color:var(--fraco);margin:0 0 9px;
+    }
+    .fase--agora .q{color:var(--ambar)}
+    .fase h3{font-size:1.04rem;font-weight:900;margin:0 0 9px;letter-spacing:-.01em;line-height:1.25}
+    .fase p{margin:0;color:var(--texto);font-size:14.5px}
+
+    /* ---------- módulos ---------- */
+    .mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:14px}
+    .mod{
+      background:var(--carvao);border:1px solid var(--linha);
+      border-radius:18px;padding:21px;min-width:0;
+      display:flex;flex-direction:column;gap:11px;
+    }
+    .mod h3{
+      font-size:.95rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em;
+      margin:0;color:var(--ambar);line-height:1.3;
+    }
+    .mod p{margin:0;color:var(--texto);font-size:14.5px}
+    .mod ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+    .mod li{
+      font-size:13.5px;color:var(--texto);
+      padding-left:15px;position:relative;
+    }
+    .mod li::before{
+      content:"";position:absolute;left:0;top:.62em;
+      width:5px;height:5px;border-radius:50%;background:var(--linha-ambar);
+    }
+
+    /* ---------- exigências ---------- */
+    .exig{display:flex;flex-direction:column;gap:2px}
+    .ex{
+      display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:start;
+      padding:17px 0;border-bottom:1px solid var(--linha);
+    }
+    .ex:last-child{border-bottom:0}
+    .ex .ico{
+      width:30px;height:30px;flex:0 0 auto;border-radius:8px;
+      background:rgba(231,158,20,.1);border:1px solid var(--linha-ambar);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .ex .tx{min-width:0}
+    .ex h3{font-size:.96rem;font-weight:900;margin:0 0 5px;letter-spacing:-.01em;line-height:1.3}
+    .ex p{margin:0;color:var(--texto);font-size:14.5px}
+
+    /* ---------- abertas ---------- */
+    .ab{display:flex;flex-direction:column;gap:11px}
+    .item{
+      background:var(--carvao);border:1px solid var(--linha);
+      border-left:3px solid var(--linha-ambar);
+      border-radius:0 14px 14px 0;padding:17px 19px;min-width:0;
+    }
+    .item--trava{border-left-color:var(--ambar)}
+    .item h3{font-size:.94rem;font-weight:900;margin:0 0 5px;letter-spacing:-.01em;line-height:1.3}
+    .item p{margin:0;color:var(--texto);font-size:14.5px}
+    .trava{
+      display:inline-block;font-size:10.5px;font-weight:900;
+      text-transform:uppercase;letter-spacing:.1em;color:var(--preto);
+      background:var(--ambar);border-radius:5px;padding:3px 8px;margin:0 0 8px;
+    }
+
+    /* ---------- nota ---------- */
+    .nota{
+      border-top:1px solid var(--linha);
+      padding-block:26px;
+      color:var(--fraco);font-size:13.5px;margin:0;
+    }
+
+    /* ---------- rodapé ---------- */
+    footer{background:var(--carvao);border-top:1px solid var(--linha);margin-top:clamp(28px,6vw,48px)}
+    .fin{
+      max-width:880px;margin:0 auto;padding:30px 20px;
+      padding-bottom:calc(30px + env(safe-area-inset-bottom,0px));
+      display:flex;flex-wrap:wrap;gap:12px;
+      align-items:center;justify-content:space-between;
+    }
+    .marca{font-size:14.5px;font-weight:900;letter-spacing:-.01em;margin:0}
+    .marca .am{color:var(--ambar)}
+    .fin span{font-size:12.5px;color:var(--fraco)}
+
+    @media (max-width:420px){
+      .ex{grid-template-columns:1fr;gap:10px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pg">
+
+    <header class="hero">
+      <p class="tag">Documento de trabalho</p>
+      <h1>Sistema de gestão <span class="am">Siconect</span></h1>
+      <p class="lead">
+        Um ERP completo, construído primeiro para rodar a operação da própria casa e
+        desenhado desde o início para virar produto de mercado. Esta página registra
+        o que o sistema faz, o que isso exige da infraestrutura e o que ainda não
+        está decidido.
+      </p>
+    </header>
+
+    <section>
+      <div class="cab">
+        <span class="num">1</span>
+        <h2>Duas fases, uma arquitetura</h2>
+      </div>
+      <p class="intro">
+        A segunda fase é o que define as decisões técnicas da primeira. Um sistema
+        interno e um produto de mercado não têm a mesma planta — e trocar a planta
+        depois, num sistema que já guarda lançamento financeiro, não é ajuste: é
+        reescrita.
+      </p>
+      <div class="fases">
+        <div class="fase fase--agora">
+          <p class="q">Fase 1 &middot; agora</p>
+          <h3>Sistema interno</h3>
+          <p>
+            Roda a operação da Siconect: comercial, ordem de serviço, financeiro e
+            mídia num só lugar, substituindo planilha e controle solto.
+          </p>
+        </div>
+        <div class="fase">
+          <p class="q">Fase 2 &middot; depois</p>
+          <h3>Produto de mercado</h3>
+          <p>
+            O mesmo sistema atendendo outras empresas, cada uma vendo só os dados
+            dela. É isso que obriga a separação por inquilino a existir desde o
+            primeiro dia.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="cab">
+        <span class="num">2</span>
+        <h2>Os módulos</h2>
+      </div>
+      <p class="intro">
+        Cinco frentes. O escopo detalhado de cada uma ainda vai ser fechado — o que
+        está aqui é o recorte já definido.
+      </p>
+      <div class="mods">
+
+        <div class="mod">
+          <h3>Financeiro</h3>
+          <p>O núcleo do sistema e o módulo com a régua mais alta de confiabilidade.</p>
+          <ul>
+            <li>Contas a pagar</li>
+            <li>Contas a receber</li>
+            <li>Histórico que não se apaga</li>
+          </ul>
+        </div>
+
+        <div class="mod">
+          <h3>Ordem de serviço</h3>
+          <p>
+            A ponte entre o que foi vendido e o que foi entregue. Atende tanto
+            instalação quanto manutenção recorrente.
+          </p>
+          <ul>
+            <li>Abertura e acompanhamento</li>
+            <li>Execução em campo</li>
+            <li>Vínculo com o cliente e o contrato</li>
+          </ul>
+        </div>
+
+        <div class="mod">
+          <h3>CRM</h3>
+          <p>
+            Os pipelines por linha de produto já existem como especificação e são a
+            base deste módulo.
+          </p>
+          <ul>
+            <li>Pipeline por produto</li>
+            <li>Etapas e qualificação</li>
+            <li>Carteira por consultor</li>
+          </ul>
+        </div>
+
+        <div class="mod">
+          <h3>Marketing</h3>
+          <p>
+            Fecha o ciclo: a campanha que gerou o lead precisa aparecer ao lado da
+            venda que ele virou.
+          </p>
+          <ul>
+            <li>Origem do lead por campanha</li>
+            <li>Custo contra receita</li>
+            <li>Nomenclatura padronizada</li>
+          </ul>
+        </div>
+
+        <div class="mod">
+          <h3>Conexões e integrações</h3>
+          <p>
+            O sistema não vive sozinho. Cada conexão externa é uma fonte que pode
+            cair, atrasar ou mudar de contrato.
+          </p>
+          <ul>
+            <li>Plataformas de anúncio</li>
+            <li>Mensageria com o lead</li>
+            <li>Cobertura e regra comercial por praça</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="cab">
+        <span class="num">3</span>
+        <h2>O que isso exige da infraestrutura</h2>
+      </div>
+      <p class="intro">
+        Nenhum item abaixo é preferência técnica. Cada um é consequência direta de
+        algum módulo acima.
+      </p>
+      <div class="exig">
+
+        <div class="ex">
+          <span class="ico">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="#E79E14" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </span>
+          <div class="tx">
+            <h3>Separação por inquilino desde o primeiro dia</h3>
+            <p>
+              Porque a fase 2 é produto de mercado. Cada registro nasce sabendo de
+              quem é, e o isolamento é garantido no próprio banco — não na tela, nem
+              na confiança de que a consulta foi escrita certa.
+            </p>
+          </div>
+        </div>
+
+        <div class="ex">
+          <span class="ico">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="#E79E14" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M3 12h4M17 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+          </span>
+          <div class="tx">
+            <h3>Transação de verdade no banco</h3>
+            <p>
+              Um pagamento que debita de um lado e credita do outro não pode
+              concluir pela metade. Isso descarta banco sem garantia transacional e
+              aponta para PostgreSQL.
+            </p>
+          </div>
+        </div>
+
+        <div class="ex">
+          <span class="ico">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="#E79E14" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-9 9Z"/><path d="M12 7v5l3.5 2"/></svg>
+          </span>
+          <div class="tx">
+            <h3>Recuperação a ponto no tempo</h3>
+            <p>
+              Backup diário responde a desastre, não a erro humano. Num módulo
+              financeiro, voltar o banco ao estado de três horas atrás é requisito,
+              e ele tem preço próprio em quase todo provedor.
+            </p>
+          </div>
+        </div>
+
+        <div class="ex">
+          <span class="ico">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="#E79E14" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7.5 11.5 12 16l4.5-4.5"/><path d="M4 20h16"/></svg>
+          </span>
+          <div class="tx">
+            <h3>Lançamento se estorna, não se apaga</h3>
+            <p>
+              Dado financeiro corrigido guarda as duas versões e quem mudou. Isso é
+              decisão de modelagem, não recurso de provedor — e custa caro se
+              lembrada depois dos primeiros lançamentos.
+            </p>
+          </div>
+        </div>
+
+        <div class="ex">
+          <span class="ico">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="#E79E14" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11a4 4 0 0 1 0 8H9"/><path d="M7 4 4 7l3 3"/><path d="M12 18h8"/></svg>
+          </span>
+          <div class="tx">
+            <h3>Integração entra por fila, nunca direto</h3>
+            <p>
+              Plataforma externa cai e muda de contrato sem avisar. Com fila, a
+              queda vira atraso e a chamada se repete sozinha; sem fila, vira
+              registro perdido no meio de um cadastro.
+            </p>
+          </div>
+        </div>
+
+        <div class="ex">
+          <span class="ico">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="#E79E14" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          </span>
+          <div class="tx">
+            <h3>Dado pessoal fica no sistema, não no e-mail</h3>
+            <p>
+              Notificação avisa e manda para dentro do sistema. Documento, valor e
+              dado de cliente não viajam no corpo da mensagem — é o que mantém a
+              base de dados pessoais num perímetro só.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="cab">
+        <span class="num">4</span>
+        <h2>Decisões em aberto</h2>
+      </div>
+      <p class="intro">
+        A ordem importa: a primeira trava as outras três, porque define em qual
+        titularidade cada conta recorrente é aberta.
+      </p>
+      <div class="ab">
+
+        <div class="item item--trava">
+          <span class="trava">Trava as demais</span>
+          <h3>Titularidade das contas</h3>
+          <p>
+            Servidor, banco e serviços nascem no nome de quem vai ser dono do
+            sistema. Decidido depois, significa reabrir tudo — conta de nuvem não
+            muda de titular sem recomeçar.
+          </p>
+        </div>
+
+        <div class="item">
+          <h3>Provedor de banco de dados</h3>
+          <p>
+            A escolha está entre os provedores já avaliados. O que falta não é
+            opinião: é a tarifa de disco por GB, o preço da recuperação a ponto no
+            tempo e o custo de tráfego de saída de cada um.
+          </p>
+        </div>
+
+        <div class="item">
+          <h3>Forma do isolamento por inquilino</h3>
+          <p>
+            Separação por linha com política no banco, ou um esquema por inquilino.
+            A primeira escala melhor em número de clientes; a segunda isola melhor e
+            facilita entregar a base de um cliente só.
+          </p>
+        </div>
+
+        <div class="item">
+          <h3>Escopo fechado de cada módulo</h3>
+          <p>
+            As cinco frentes estão definidas; o detalhe de cada uma, não. O
+            financeiro é o que precisa sair primeiro do papel, porque é ele que
+            impõe a régua para o resto.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <p class="nota">
+      Documento de trabalho, em revisão. Os pontos da seção 4 mudam o desenho das
+      seções 1 a 3 e serão atualizados aqui conforme forem fechados.
+    </p>
+
+  </div>
+
+  <footer>
+    <div class="fin">
+      <p class="marca"><span class="am">Educ</span> Lead</p>
+      <span>Infraestrutura &middot; Sistema Siconect</span>
+    </div>
+  </footer>
+
+</body>
+</html>
