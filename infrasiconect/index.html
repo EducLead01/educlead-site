@@ -139,6 +139,31 @@
       background:var(--ambar);border-radius:5px;padding:3px 8px;margin:0 0 8px;
     }
 
+    /* ---------- pilha ---------- */
+    .pilha{display:flex;flex-direction:column;gap:2px}
+    .lin{
+      display:grid;grid-template-columns:124px 1fr auto;gap:14px;align-items:baseline;
+      padding:16px 0;border-bottom:1px solid var(--linha);
+    }
+    .lin:last-child{border-bottom:0}
+    .cam{
+      font-size:10.5px;font-weight:900;text-transform:uppercase;letter-spacing:.11em;
+      color:var(--fraco);line-height:1.6;margin:0;
+    }
+    .sv{min-width:0}
+    .sv h3{font-size:1rem;font-weight:900;margin:0 0 4px;letter-spacing:-.01em;line-height:1.3}
+    .sv p{margin:0;color:var(--texto);font-size:14px}
+    .chip{
+      font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.09em;
+      border-radius:5px;padding:4px 9px;white-space:nowrap;
+    }
+    .chip--uso{background:rgba(231,158,20,.14);border:1px solid var(--linha-ambar);color:var(--ambar)}
+    .chip--av{background:rgba(255,255,255,.06);border:1px solid var(--linha);color:var(--fraco)}
+    @media (max-width:620px){
+      .lin{grid-template-columns:1fr auto;gap:6px 12px}
+      .cam{grid-column:1/-1}
+    }
+
     /* ---------- nota ---------- */
     .nota{
       border-top:1px solid var(--linha);
@@ -168,13 +193,14 @@
   <div class="pg">
 
     <header class="hero">
-      <p class="tag">Documento de trabalho</p>
+      <p class="tag">Para revisão técnica</p>
       <h1>Sistema de gestão <span class="am">Siconect</span></h1>
       <p class="lead">
         Um ERP completo, construído primeiro para rodar a operação da própria casa e
         desenhado desde o início para virar produto de mercado. Esta página registra
         o que o sistema faz, o que isso exige da infraestrutura e o que ainda não
-        está decidido.
+        está decidido — e existe para ser revisada por quem vai apontar o que está
+        errado nela. As perguntas estão na seção 6.
       </p>
     </header>
 
@@ -387,6 +413,82 @@
     <section>
       <div class="cab">
         <span class="num">4</span>
+        <h2>A pilha sobre a mesa</h2>
+      </div>
+      <p class="intro">
+        O que já está em uso ou em avaliação, por camada. Nada aqui está fechado —
+        é exatamente esta lista que queremos ver questionada.
+      </p>
+      <div class="pilha">
+
+        <div class="lin">
+          <p class="cam">Código</p>
+          <div class="sv">
+            <h3>GitHub</h3>
+            <p>
+              Um repositório por projeto, nunca monorepo. É o que permite entregar o
+              sistema de um cliente sem expor o histórico dos outros.
+            </p>
+          </div>
+          <span class="chip chip--uso">Em uso</span>
+        </div>
+
+        <div class="lin">
+          <p class="cam">Aplicação</p>
+          <div class="sv">
+            <h3>Vercel</h3>
+            <p>
+              Hoje serve os painéis, já na região de São Paulo. A dúvida aberta é se
+              função sem servidor sustenta um ERP com fechamento financeiro e fila.
+            </p>
+          </div>
+          <span class="chip chip--uso">Em uso</span>
+        </div>
+
+        <div class="lin">
+          <p class="cam">Banco de dados</p>
+          <div class="sv">
+            <h3>Supabase</h3>
+            <p>
+              PostgreSQL gerenciado com autenticação, arquivos e política de acesso
+              dentro do próprio banco. É essa política que resolveria a separação por
+              inquilino sem depender de cada consulta estar escrita certa.
+            </p>
+          </div>
+          <span class="chip chip--av">Em avaliação</span>
+        </div>
+
+        <div class="lin">
+          <p class="cam">E-mail</p>
+          <div class="sv">
+            <h3>Resend</h3>
+            <p>
+              E-mail transacional: aviso de ordem de serviço, cobrança, recuperação
+              de acesso. Sem dado pessoal no corpo da mensagem.
+            </p>
+          </div>
+          <span class="chip chip--av">Em avaliação</span>
+        </div>
+
+        <div class="lin">
+          <p class="cam">Nuvem</p>
+          <div class="sv">
+            <h3>AWS</h3>
+            <p>
+              A opção de nuvem completa, com região em São Paulo. Resolve servidor
+              persistente, fila e banco no mesmo lugar, a um custo maior — a região
+              brasileira cobra prêmio sobre as americanas.
+            </p>
+          </div>
+          <span class="chip chip--av">Em avaliação</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="cab">
+        <span class="num">5</span>
         <h2>Decisões em aberto</h2>
       </div>
       <p class="intro">
@@ -408,9 +510,9 @@
         <div class="item">
           <h3>Provedor de banco de dados</h3>
           <p>
-            A escolha está entre os provedores já avaliados. O que falta não é
-            opinião: é a tarifa de disco por GB, o preço da recuperação a ponto no
-            tempo e o custo de tráfego de saída de cada um.
+            Entre os da seção 4. Três números ainda faltam para fechar, e nenhum é
+            questão de opinião: a tarifa de disco por GB, o preço da recuperação a
+            ponto no tempo e o custo de tráfego de saída.
           </p>
         </div>
 
@@ -435,9 +537,73 @@
       </div>
     </section>
 
+    <section>
+      <div class="cab">
+        <span class="num">6</span>
+        <h2>O que a gente quer que você olhe</h2>
+      </div>
+      <p class="intro">
+        Cinco perguntas, em ordem de impacto. A primeira é a que mais muda o resto —
+        e é a que a gente tem menos certeza de estar enxergando direito.
+      </p>
+      <div class="ab">
+
+        <div class="item item--trava">
+          <h3>1. Função sem servidor aguenta este ERP?</h3>
+          <p>
+            A Vercel roda função de curta duração. Este sistema tem fechamento
+            financeiro, relatório pesado, fila de integração e tarefa agendada —
+            tudo de vida longa. Somado a isso, há o limite de conexões do PostgreSQL
+            contra a abertura em leque das funções. Isso pede um servidor persistente
+            ao lado, ou dá para resolver dentro do modelo?
+          </p>
+        </div>
+
+        <div class="item">
+          <h3>2. Separação por linha ou um esquema por inquilino?</h3>
+          <p>
+            As duas atendem a fase 2. Queremos a leitura de quem já manteve as duas
+            em produção: qual dói menos depois de alguns anos e algumas dezenas de
+            clientes?
+          </p>
+        </div>
+
+        <div class="item">
+          <h3>3. Qual banco entrega recuperação a ponto no tempo sem adicional caro?</h3>
+          <p>
+            É requisito do módulo financeiro, não conforto. Em vários provedores ela
+            é adicional de preço alto, e isso muda a comparação inteira. Qual
+            combinação de banco e plano resolve isso de forma honesta?
+          </p>
+        </div>
+
+        <div class="item">
+          <h3>4. O dado pode sair do Brasil?</h3>
+          <p>
+            Guardar fora é legal com a salvaguarda contratual certa, mas continua
+            sendo transferência internacional, e o sistema vai guardar documento e
+            dado financeiro de cliente. Vale a simplicidade de manter tudo em região
+            brasileira, ou a salvaguarda resolve com folga?
+          </p>
+        </div>
+
+        <div class="item">
+          <h3>5. O que desta pilha é excesso?</h3>
+          <p>
+            Dos cinco serviços da seção 4, três podem hospedar aplicação e dois podem
+            servir banco. Onde a gente está prestes a pagar duas vezes pela mesma
+            camada, e o que você cortaria antes de começar?
+          </p>
+        </div>
+
+      </div>
+    </section>
+
     <p class="nota">
-      Documento de trabalho, em revisão. Os pontos da seção 4 mudam o desenho das
-      seções 1 a 3 e serão atualizados aqui conforme forem fechados.
+      Documento de trabalho, em revisão. Os pontos das seções 5 e 6 mudam o desenho
+      das seções 1 a 3 e serão atualizados aqui conforme forem fechados. O escopo
+      detalhado de cada módulo ainda não está fechado, e os números de custo citados
+      como pendentes não foram confirmados em fonte oficial.
     </p>
 
   </div>
